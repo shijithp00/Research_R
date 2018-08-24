@@ -1,6 +1,6 @@
 ---
 title: "Final"
-author: "Shijith & Vikas"
+author: "Shijith"
 output: html_document
 ---
 
@@ -385,9 +385,7 @@ Different Steps followed in this function are as follows:
 - find 'k' clusters for selected_class and label each dataelemnts with the cluster name
 - num will give the total number of data elements to be selected for the given percentage 
     + num is calculated by using the formula below:
-\begin{equation*}
-\left(\frac{T*y}{1-y}\right)
-\end{equation*}
+%\left(\frac{T*y}{1-y}\right)%
 - if (num > total elemnts in the selected_class), data elemnts has to be selected using 'stratified sampling with replacement' technique, maintaining the proportion of different clusters. (our dataset doesnt need upsampling since each class has about 16% elements) (DescTools::Strata is used for sampling)
 - if(num > total elemnts in the selected class), data has to be downsampled. Here also stratified selection is used maintaining the proportion of different clusters. (caret::createDataPartition is used for sampling) 
 - combine the selected elements and 'other_class' dataframe which will make the final 'train' dataframe.
@@ -476,17 +474,13 @@ This function  Will save the following details to different 'csv' sheets as expl
   - *F1 score* of the down/up sampled class while predicting on *Train* data.
   - *F1 score* of the down/up sampled class while predicting on *Test* data.
   - *S score* of the down/up sampled class (calculation as below):
-\begin{equation*}
-S=\frac{F1_{Train} + F1_{Train}}{2(1+(F1_{Train} + F1_{Train}))}  ,     {0<= S <= 1}
-\end{equation*}
+%S=\frac{F1_{Train} + F1_{Train}}{2(1+(F1_{Train} + F1_{Train}))}  ,     {0<= S <= 1}%
   - Overall *F1 score*  while predicting on *Train* data
   - Overall *F1 score* while predicting on *Test* data
   - *S score* all the classes (overall, calculation same as above)
 2. '**AUSC_x_to_x_Perc.csv**' three csv files ((0 to 2%),(2.5 to 10%),(0 to 10%))
   +  Area under the S_Score curve is claculated using sympsons 1/3rd rule
-\begin{equation*}
-AUSC=\frac{0.5}{3}\left[y_0+y_n+4*\sum \left(y_1,y_3...y_n-1\right)+2*\sum \left(y_2,y_4...y_n-2\right)\right], 0<=AUSC<=10
-\end{equation*}
+%AUSC=\frac{0.5}{3}\left[y_0+y_n+4*\sum \left(y_1,y_3...y_n-1\right)+2*\sum \left(y_2,y_4...y_n-2\right)\right], 0<=AUSC<=10%
   
 ```
 {
