@@ -481,7 +481,7 @@ This function  Will save the following details to different 'csv' sheets as expl
 2. '**AUSC_x_to_x_Perc.csv**' three csv files ((0 to 2%),(2.5 to 10%),(0 to 10%))
   +  Area under the S_Score curve is claculated using sympsons 1/3rd rule
   
-<a href="https://www.codecogs.com/eqnedit.php?latex=AUSC=\frac{0.5}{3}\left[y_0&plus;y_n&plus;4*\sum&space;\left(y_1,y_3...y_n-1\right)&plus;2*\sum&space;\left(y_2,y_4...y_n-\right)\right]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?AUSC=\frac{0.5}{3}\left[y_0&plus;y_n&plus;4*\sum&space;\left(y_1,y_3...y_n-1\right)&plus;2*\sum&space;\left(y_2,y_4...y_n-\right)\right]" title="AUSC=\frac{0.5}{3}\left[y_0+y_n+4*\sum \left(y_1,y_3...y_n-1\right)+2*\sum \left(y_2,y_4...y_n-\right)\right]" /></a>
+<a href="https://www.codecogs.com/eqnedit.php?latex=\fn_jvn&space;AUSC=\frac{0.5}{3}\left[y_0&plus;y_{n&plus;4}*\sum&space;\left(y_1,y_3...y_{n-1}\right)&plus;2*\sum&space;\left(y_2,y_4...y_{n-2}\right)\right]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\fn_jvn&space;AUSC=\frac{0.5}{3}\left[y_0&plus;y_{n&plus;4}*\sum&space;\left(y_1,y_3...y_{n-1}\right)&plus;2*\sum&space;\left(y_2,y_4...y_{n-2}\right)\right]" title="AUSC=\frac{0.5}{3}\left[y_0+y_{n+4}*\sum \left(y_1,y_3...y_{n-1}\right)+2*\sum \left(y_2,y_4...y_{n-2}\right)\right]" /></a>
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=0<=AUSC<=10" target="_blank"><img src="https://latex.codecogs.com/gif.latex?0<=AUSC<=10" title="0<=AUSC<=10" /></a>
   
