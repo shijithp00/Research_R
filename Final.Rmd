@@ -381,7 +381,7 @@ Different Steps followed in this function are as follows:
 - find 'k' clusters for selected_class and label each dataelemnts with the cluster name
 - num will give the total number of data elements to be selected for the given percentage 
     + num is calculated by using the formula below:
-$ \left(\frac{T*y}{1-y}\right) $
+<a href="https://www.codecogs.com/eqnedit.php?latex=\fn_cm&space;\left(\frac{T*y}{1-y}\right)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\fn_cm&space;\left(\frac{T*y}{1-y}\right)" title="\left(\frac{T*y}{1-y}\right)" /></a>
 - if (num > total elemnts in the selected_class), data elemnts has to be selected using 'stratified sampling with replacement' technique, maintaining the proportion of different clusters. (our dataset doesnt need upsampling since each class has about 16% elements) (DescTools::Strata is used for sampling)
 - if(num > total elemnts in the selected class), data has to be downsampled. Here also stratified selection is used maintaining the proportion of different clusters. (caret::createDataPartition is used for sampling) 
 - combine the selected elements and 'other_class' dataframe which will make the final 'train' dataframe.
@@ -470,13 +470,14 @@ This function  Will save the following details to different 'csv' sheets as expl
   - *F1 score* of the down/up sampled class while predicting on *Train* data.
   - *F1 score* of the down/up sampled class while predicting on *Test* data.
   - *S score* of the down/up sampled class (calculation as below):
-%S=\frac{F1_{Train} + F1_{Train}}{2(1+(F1_{Train} + F1_{Train}))}  ,     {0<= S <= 1}%
+<a href="https://www.codecogs.com/eqnedit.php?latex=\fn_cm&space;S=\frac{F1_{Train}&space;&plus;&space;F1_{Train}}{2(1&plus;(F1_{Train}&space;&plus;&space;F1_{Train}))}&space;,&space;{0<=&space;S&space;<=&space;1}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\fn_cm&space;S=\frac{F1_{Train}&space;&plus;&space;F1_{Train}}{2(1&plus;(F1_{Train}&space;&plus;&space;F1_{Train}))}&space;,&space;{0<=&space;S&space;<=&space;1}" title="S=\frac{F1_{Train} + F1_{Train}}{2(1+(F1_{Train} + F1_{Train}))} , {0<= S <= 1}" /></a>
   - Overall *F1 score*  while predicting on *Train* data
   - Overall *F1 score* while predicting on *Test* data
   - *S score* all the classes (overall, calculation same as above)
 2. '**AUSC_x_to_x_Perc.csv**' three csv files ((0 to 2%),(2.5 to 10%),(0 to 10%))
   +  Area under the S_Score curve is claculated using sympsons 1/3rd rule
-$ AUSC=\frac{0.5}{3}\left[y_0+y_n+4*\sum \left(y_1,y_3...y_n-1\right)+2*\sum \left(y_2,y_4...y_n-2\right)\right], 0<=AUSC<=10 $
+<a href="https://www.codecogs.com/eqnedit.php?latex=AUSC=\frac{0.5}{3}\left[y_0&plus;y_n&plus;4*\sum&space;\left(y_1,y_3...y_n-1\right)&plus;2*\sum&space;\left(y_2,y_4...y_n-\right)\right]" target="_blank"><img src="https://latex.codecogs.com/gif.latex?AUSC=\frac{0.5}{3}\left[y_0&plus;y_n&plus;4*\sum&space;\left(y_1,y_3...y_n-1\right)&plus;2*\sum&space;\left(y_2,y_4...y_n-\right)\right]" title="AUSC=\frac{0.5}{3}\left[y_0+y_n+4*\sum \left(y_1,y_3...y_n-1\right)+2*\sum \left(y_2,y_4...y_n-\right)\right]" /></a>, 
+<a href="https://www.codecogs.com/eqnedit.php?latex=0<=AUSC<=10" target="_blank"><img src="https://latex.codecogs.com/gif.latex?0<=AUSC<=10" title="0<=AUSC<=10" /></a>
   
 ```
 {
