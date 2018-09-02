@@ -4,10 +4,6 @@ author: "Shijith"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 CLear all Junk from Working Environment and  set working directory
 
 ```{r}
@@ -385,7 +381,7 @@ Different Steps followed in this function are as follows:
 - find 'k' clusters for selected_class and label each dataelemnts with the cluster name
 - num will give the total number of data elements to be selected for the given percentage 
     + num is calculated by using the formula below:
-%\left(\frac{T*y}{1-y}\right)%
+$ \left(\frac{T*y}{1-y}\right) $
 - if (num > total elemnts in the selected_class), data elemnts has to be selected using 'stratified sampling with replacement' technique, maintaining the proportion of different clusters. (our dataset doesnt need upsampling since each class has about 16% elements) (DescTools::Strata is used for sampling)
 - if(num > total elemnts in the selected class), data has to be downsampled. Here also stratified selection is used maintaining the proportion of different clusters. (caret::createDataPartition is used for sampling) 
 - combine the selected elements and 'other_class' dataframe which will make the final 'train' dataframe.
@@ -480,7 +476,7 @@ This function  Will save the following details to different 'csv' sheets as expl
   - *S score* all the classes (overall, calculation same as above)
 2. '**AUSC_x_to_x_Perc.csv**' three csv files ((0 to 2%),(2.5 to 10%),(0 to 10%))
   +  Area under the S_Score curve is claculated using sympsons 1/3rd rule
-%AUSC=\frac{0.5}{3}\left[y_0+y_n+4*\sum \left(y_1,y_3...y_n-1\right)+2*\sum \left(y_2,y_4...y_n-2\right)\right], 0<=AUSC<=10%
+$ AUSC=\frac{0.5}{3}\left[y_0+y_n+4*\sum \left(y_1,y_3...y_n-1\right)+2*\sum \left(y_2,y_4...y_n-2\right)\right], 0<=AUSC<=10 $
   
 ```
 {
