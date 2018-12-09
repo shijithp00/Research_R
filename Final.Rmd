@@ -372,7 +372,6 @@ readAndPreprocess <- function(csvfilename){
 
 #### Function to first cluster tehn select samples and final build the model
 ___
-
 Different Steps followed in this function are as follows:
 
 - All data elements which belong to the class selected for sampling are saved to a  'selected_class' dataframe
