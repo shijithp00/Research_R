@@ -6,7 +6,7 @@ output: html_document
 
 CLear all Junk from Working Environment and  set working directory
 
-```r
+```{r}
 library(rstudioapi)
 direc=dirname(getActiveDocumentContext()$path)
 print(direc)
@@ -19,7 +19,7 @@ ___
  Checks the local R library(ies) to see if the required package(s) is/are installed or not. If the package(s) is/are not installed, then the package(s) will be installed . Then loads all the libraries requred for the current project, that are not already loded to the current working Environment. 
 'pkgs' - is the list of packaged that needs to be loaded
 
-```r
+```{r}
 install_load_pkgs <- function(pkgs) { 
   # install packages not already available:
   pkgs_miss <- pkgs[which(!pkgs %in% installed.packages()[, 1])]
@@ -94,7 +94,7 @@ res <- list.append(res,
 
 'res' is then returned to the function call 
 
-```r
+```{r}
 all_models <- function(do.this,trn=train,test=validate_data,covertype = covTyp,percent=p,valh2o=validation_h2o,trh2o=train_h2o){
   res <- list()
 	switch(do.this,
@@ -312,7 +312,7 @@ ___
 - Retun a dataframe which has combined preprocessed data for train and validation
     + Test and validation can be seperated using the column 'type' 
 
-```r
+```{r}
 readAndPreprocess <- function(csvfilename){
 	##***********READ data *********************************************************************
 	population_train_data <- read.csv(csvfilename,header = TRUE,na.strings = c("NA",""))
@@ -391,7 +391,7 @@ Different Steps followed in this function are as follows:
 - This function return is a list which contains confusion matrics details for validation and train (also contains other detail such as algo, percentahe, class, etc)
 
 
-```r
+```{r}
 cluster_sample_buildModel <- function(classes,perc_of_data,algo,train_data,validate_data){
   results <- list()
   validation_h2o <- as.h2o(validate_data)
@@ -507,7 +507,7 @@ This function  Will save the following details to different 'csv' sheets as expl
 }
 ```
 
-```r
+```{r}
 retrieve_data <- function(results_test,flag){
   len_of_results <-length(results_test)
   class_0f_target <- rep(NA,len_of_results)
@@ -621,7 +621,7 @@ This Function will open a 'shiny widget' from where we can select
 
 Further execution of the program is based on selected values from the widget.
 
-```r
+```{r}
 select_to_execute <- function(){
   ui <-fluidPage(
     titlePanel("Check the boxes to select"),
@@ -658,7 +658,7 @@ ___
 
 Interactive plot using ggplot and Plotly
 
-```r
+```{r}
 plot_F1 <- function(){
   plt <- htmltools::tagList()
   plts <- 1
@@ -714,7 +714,7 @@ Executing this block, will ask to select from two options:
 - ***warning*** At least one value fro the widget has to be selected
 - ***warning*** 'mytrain.csv' should be present in the current working directory
 
-```r
+```{r}
 # installing the pacages required if already not present
 pkgs <- c('caret','cluster','e1071','rlist','vegan','DescTools','C50','class','dummies',
           'fpc','plyr','xgboost','dplyr','h2o','ggplot2','plotly','shiny','devtools','rstudioapi')
