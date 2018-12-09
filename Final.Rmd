@@ -391,68 +391,68 @@ Different Steps followed in this function are as follows:
 
 
 ```{r}
-cluster_sample_buildModel <- function(classes,perc_of_data,algo,train_data,validate_data){
-  results <- list()
-  validation_h2o <- as.h2o(validate_data)
-  for(targetclass in classes){
-    selected_class <- train_data[train_data$Cover_Type ==targetclass,]
-    selected_class$Cover_Type <- NULL
-    other_class <- train_data[train_data$Cover_Type !=targetclass,]
-    # finding out the optimal clusters (k) and ploting it
-    fit <- cascadeKM(selected_class, 1, 10, iter = 100)
-    plot(fit, sortg = TRUE, grpmts.plot = TRUE)
-    calinski.best <- as.numeric(which.max(fit$results[2,]))
-    print(paste0("Calinski criterion opt. no. of clusters for |class-",targetclass,"| is : ", calinski.best))
-    #clustering each classes based on optimal clusters (calinski.best)
-    kmeans_fit <- kmeans(selected_class, calinski.best)
-    #plot the clusters
-    plotcluster(selected_class, kmeans_fit$cluster)
-    selected_class <- data.frame(selected_class,'Cover_Type'=targetclass,'cluster'=kmeans_fit$cluster)
-    print(prop.table(table(kmeans_fit$cluster)))
-    # num calculated from the formula discussed in class (T*y/1-y)
-    # Here if 100% data of the classs is selected take the entire row from that class 
-    # otherwise calculate 'num' using the formula 
-    for(p in perc_of_data){
-        covTyp <- targetclass
-        if(p==100){
-          num=nrow(selected_class)
-        }else{
-          num=round((dim(other_class)[[1]]*(p/100))/(1-(p/100)),0)
-      }
-      print(paste("nrows otherclass :",nrow(other_class)," p: ",p," num :",num))
-      # stratified sampling on cluster percentage is num/nrow(selected_class) eg: for .1%, perc=10/1728
-      # then select only the first n-1 columns ie, excluding cluster column
-      # for upsampling using stratified random sampling with replacement.
-      if(num > table(train_data$Cover_Type)[[targetclass]]){
-        nums=c()
-        for (clus in seq(1:dim(prop.table(table(kmeans_fit$cluster))))) {
-          nums[clus] =  round(prop.table(table(kmeans_fit$cluster))[[clus]]*num,0)
-        }
-        Stratified_upsamples <- Strata(selected_class,c("cluster"),size=nums, method="srswr")
-        rownames(Stratified_upsamples) <- make.names(Stratified_upsamples$id,unique=TRUE)
-        Stratified_upsamples <- Stratified_upsamples[,c(2:(ncol(Stratified_upsamples)-3))]
-        train <- rbind(other_class,Stratified_upsamples)
-        rm(nums,Stratified_upsamples)
-      } else{
-        train <- rbind(other_class,
-                       selected_class[createDataPartition(selected_class$cluster,
-                                                          p = num/nrow(selected_class), list = F)
-                                      ,][,1:(ncol(selected_class)-1)])
-      }
-      #shuffle data row wise
-      train <- train[sample(nrow(train)),]
-      print(paste("nrows train :",nrow(train)))
-      train_h2o <- as.h2o(train)
-      #build all models for 'p' Percentage 'targetclass' class
-      for(algorithm in algo){
-        res=all_models(do.this = algorithm,trn=train,test=validate_data,
-                       covertype = covTyp,percent=p,
-                       valh2o=validation_h2o,trh2o=train_h2o)
-        results <- list.append(results,res)
-      }
-    }
-  }
-  return(results)
+cluster_sample_buildModel <- function(classes,perc_of_data,algo,train_data,validate_data){	
+	results <- list()
+	validation_h2o <- as.h2o(validate_data)
+	for(targetclass in classes){		
+		selected_class <- train_data[train_data$Cover_Type ==targetclass,]		
+		selected_class$Cover_Type <- NULL
+		other_class <- train_data[train_data$Cover_Type !=targetclass,]
+		# finding out the optimal clusters (k) and ploting it
+		fit <- cascadeKM(selected_class, 1, 10, iter = 100)
+		plot(fit, sortg = TRUE, grpmts.plot = TRUE)
+		calinski.best <- as.numeric(which.max(fit$results[2,]))
+		print(paste0("Calinski criterion opt. no. of clusters for |class-",targetclass,"| is : ", calinski.best))
+		#clustering each classes based on optimal clusters (calinski.best)
+		kmeans_fit <- kmeans(selected_class, calinski.best)
+		#plot the clusters
+		plotcluster(selected_class, kmeans_fit$cluster)
+		selected_class <- data.frame(selected_class,'Cover_Type'=targetclass,'cluster'=kmeans_fit$cluster)
+		print(prop.table(table(kmeans_fit$cluster)))
+		# num calculated from the formula discussed in class (T*y/1-y)
+		# Here if 100% data of the classs is selected take the entire row from that class 
+		# otherwise calculate 'num' using the formula 
+		for(p in perc_of_data){
+			covTyp <- targetclass
+			if(p==100){
+			  num=nrow(selected_class)
+			}else{
+			  num=round((dim(other_class)[[1]]*(p/100))/(1-(p/100)),0)
+			}
+			print(paste("nrows otherclass :",nrow(other_class)," p: ",p," num :",num))
+			# stratified sampling on cluster percentage is num/nrow(selected_class) eg: for .1%, perc=10/1728
+			# then select only the first n-1 columns ie, excluding cluster column
+			# for upsampling using stratified random sampling with replacement.
+			if(num > table(train_data$Cover_Type)[[targetclass]]){
+				nums=c()
+				for (clus in seq(1:dim(prop.table(table(kmeans_fit$cluster))))) {
+					nums[clus] =  round(prop.table(table(kmeans_fit$cluster))[[clus]]*num,0)
+				}
+				Stratified_upsamples <- Strata(selected_class,c("cluster"),size=nums, method="srswr")
+				rownames(Stratified_upsamples) <- make.names(Stratified_upsamples$id,unique=TRUE)
+				Stratified_upsamples <- Stratified_upsamples[,c(2:(ncol(Stratified_upsamples)-3))]
+				train <- rbind(other_class,Stratified_upsamples)
+				rm(nums,Stratified_upsamples)
+			} else{
+				train <- rbind(other_class,
+					       selected_class[createDataPartition(selected_class$cluster,
+										  p = num/nrow(selected_class), list = F)
+							      ,][,1:(ncol(selected_class)-1)])
+			}
+			#shuffle data row wise
+			train <- train[sample(nrow(train)),]
+			print(paste("nrows train :",nrow(train)))
+			train_h2o <- as.h2o(train)
+			#build all models for 'p' Percentage 'targetclass' class
+			for(algorithm in algo){
+				res=all_models(do.this = algorithm,trn=train,test=validate_data,
+					       covertype = covTyp,percent=p,
+					       valh2o=validation_h2o,trh2o=train_h2o)
+				results <- list.append(results,res)
+			}
+		}
+	}
+	return(results)
 }
 ```
 
